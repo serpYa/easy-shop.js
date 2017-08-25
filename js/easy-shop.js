@@ -22,13 +22,11 @@ function addToCart(e) {
     }
 
     if (card.querySelector('.e-shop-price')) {
-      price = Number(
+      price = parseFloat(
         card.querySelector('.e-shop-price')
           .innerText
           .replace(',', '.')
-          .replace(/[^0-9\.]*/g, '')
-          .replace(/^[\.]?/, '')
-          .replace(/[\.]?$/, '')
+          .replace(/^\D+/ig,'')
       );
     } else {
       return;
@@ -57,7 +55,8 @@ function addToCart(e) {
         goods.push(good);
 
       } else {
-        goods[indexArr].amount += 1;
+        let goodAmount = parseInt(goods[indexArr].amount);
+        goods[indexArr].amount = ++goodAmount;
       }
     }
     localStorage.easyCart = JSON.stringify(goods);
